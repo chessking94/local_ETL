@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35521.163 d17.12
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "local_ETL", "local_ETL\local_ETL.vbproj", "{4C85F885-FAF4-4FB7-86C0-30D44AACACB9}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Utilities_NetCore", "..\Utilities_NetCore\Utilities_NetCore\Utilities_NetCore.vbproj", "{A2A2DE40-1FA5-4B3A-91F8-4DDD64B7B58E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4C85F885-FAF4-4FB7-86C0-30D44AACACB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C85F885-FAF4-4FB7-86C0-30D44AACACB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C85F885-FAF4-4FB7-86C0-30D44AACACB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C85F885-FAF4-4FB7-86C0-30D44AACACB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2A2DE40-1FA5-4B3A-91F8-4DDD64B7B58E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2A2DE40-1FA5-4B3A-91F8-4DDD64B7B58E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2A2DE40-1FA5-4B3A-91F8-4DDD64B7B58E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2A2DE40-1FA5-4B3A-91F8-4DDD64B7B58E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
