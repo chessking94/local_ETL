@@ -148,6 +148,7 @@ Friend MustInherit Class clsBase
     ''' </summary>
     Private Sub BasePreProcessing()
         'end the process early if there are no applicable files
+        'no need to have a try/catch if the directory is not accessible, would be caught by existing exception handling
         Dim objl_Files As String() = Directory.GetFiles(ImportDirectory(), $"*{FileExtension}")
         If objl_Files.Length = 0 Then
             boom_Abort = True
