@@ -21,7 +21,7 @@ Friend Class clsChessGameAnalysis : Inherits clsBase
 
             Dim objl_Output As New SqlParameter("@poErrorMessage", SqlDbType.NVarChar)
             objl_Output.Direction = ParameterDirection.Output
-            objl_Output.Size = 100
+            objl_Output.Size = -1
             objm_CMD.Parameters.Add(objl_Output)
 
             Dim objl_Return As New SqlParameter("@ReturnValue", SqlDbType.Int)
@@ -41,6 +41,65 @@ Friend Class clsChessGameAnalysis : Inherits clsBase
 
                 Dim strl_LogMessage As String = $"Successfully processed file '{strl_Filename}'"
                 modLogging.AddLog(strm_ProgramName, "VB", "clsChessGameAnalysis.Go_Child", eLogLevel.INFO, strl_LogMessage, objm_LogMethod)
+            Else
+                'process failed, dump the contents of stage.Games and stage.Moves to text files
+                Dim gameErrorName As String = $"{Path.GetFileNameWithoutExtension(strl_Filename)}_GameErrors_{DateTime.Now:yyyyMMddHHmmss}.txt"
+                objm_CMD.Parameters.Clear()
+                objm_CMD.CommandType = CommandType.Text
+                objm_CMD.CommandText = "SELECT * FROM ChessWarehouse.stage.Games WHERE Errors IS NOT NULL"
+
+                With objm_CMD.ExecuteReader
+                    If .HasRows Then
+                        Using writer As New StreamWriter(Path.Combine(ExportDirectory(), gameErrorName), False)
+                            'headers
+                            For i As Integer = 0 To .FieldCount - 1
+                                writer.Write(.GetName(i))
+                                If i < .FieldCount - 1 Then writer.Write(vbTab)
+                            Next
+                            writer.WriteLine()
+
+                            'data
+                            While .Read()
+                                For i As Integer = 0 To .FieldCount - 1
+                                    Dim fieldValue As String = If(.IsDBNull(i), "", .GetValue(i).ToString())
+                                    writer.Write(fieldValue)
+                                    If i < .FieldCount - 1 Then writer.Write(vbTab)
+                                Next
+                                writer.WriteLine()
+                            End While
+                        End Using
+                    End If
+                    .Close()
+                End With
+
+                Dim moveErrorName As String = $"{Path.GetFileNameWithoutExtension(strl_Filename)}_MoveErrors_{DateTime.Now:yyyyMMddHHmmss}.txt"
+                objm_CMD.Parameters.Clear()
+                objm_CMD.CommandType = CommandType.Text
+                objm_CMD.CommandText = "SELECT * FROM ChessWarehouse.stage.Moves WHERE Errors IS NOT NULL"
+
+                With objm_CMD.ExecuteReader
+                    If .HasRows Then
+                        Using writer As New StreamWriter(Path.Combine(ExportDirectory(), moveErrorName), False)
+                            'headers
+                            For i As Integer = 0 To .FieldCount - 1
+                                writer.Write(.GetName(i))
+                                If i < .FieldCount - 1 Then writer.Write(vbTab)
+                            Next
+                            writer.WriteLine()
+
+                            'data
+                            While .Read()
+                                For i As Integer = 0 To .FieldCount - 1
+                                    Dim fieldValue As String = If(.IsDBNull(i), "", .GetValue(i).ToString())
+                                    writer.Write(fieldValue)
+                                    If i < .FieldCount - 1 Then writer.Write(vbTab)
+                                Next
+                                writer.WriteLine()
+                            End While
+                        End Using
+                    End If
+                    .Close()
+                End With
             End If
         Next
     End Sub

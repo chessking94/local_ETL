@@ -53,7 +53,11 @@ Friend MustInherit Class clsBase
     ''' Directory to import files from, taken from appsettings.json for "ImportPath_{ProcessName}"
     ''' </returns>
     Protected Overridable Function ImportDirectory() As String
-        Return objm_myConfig.getConfig($"ImportPath_{Name()}")
+        Return Path.Combine(objm_myConfig.getConfig("fileProcessingRoot"), "Import", Name())
+    End Function
+
+    Protected Overridable Function ExportDirectory() As String
+        Return Path.Combine(objm_myConfig.getConfig("fileProcessingRoot"), "Export", Name())
     End Function
 
     ''' <summary>
@@ -112,12 +116,13 @@ Friend MustInherit Class clsBase
         Dim projectDir As String = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "..\\..\\.."))
         Dim connectionString As String = Environment.GetEnvironmentVariable("ConnectionStringDebug")
         objm_LogMethod = eLogMethod.CONSOLE
+        Dim configFile As String = Path.Combine(projectDir, "appsettings.Development.json")
 #Else
-        Dim projectDir As String = Path.GetFullPath(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ".."))
+        Dim projectDir As String = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory)
         Dim connectionString As String = Environment.GetEnvironmentVariable("ConnectionStringRelease")
         objm_LogMethod = eLogMethod.DATABASE
-#End If
         Dim configFile As String = Path.Combine(projectDir, "appsettings.json")
+#End If
         objm_myConfig.configFile = configFile
 
         If connectionString Is Nothing Then

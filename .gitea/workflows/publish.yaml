@@ -15,6 +15,15 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
 
+      - name: Build appsettings file
+        uses: cschleiden/replace-tokens@v1.3
+        with:
+          tokenPrefix: '$('
+          tokenSuffix: ')'
+          files: '**/appsettings.json'
+        env:
+          FILEPROCESSING_ROOT: ${{ vars.FILEPROCESSING_ROOT }}
+
       - name: Install dotnet
         uses: actions/setup-dotnet@v4
         with:
