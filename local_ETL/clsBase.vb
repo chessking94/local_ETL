@@ -33,6 +33,7 @@ Friend MustInherit Class clsBase
         'FileType = FileTypeID
         ChessGameAnalysis = 1
         LichessEvaluations = 2
+        UnanalyzedChessGames = 3
     End Enum
 #End Region
 
@@ -45,7 +46,7 @@ Friend MustInherit Class clsBase
     ''' <summary>
     ''' Contains the base functionality for each individual process
     ''' </summary>
-    Protected MustOverride Sub Go_Child()
+    Protected MustOverride Async Function Go_Child() As Task
 #End Region
 
 #Region "Overridable"
@@ -183,7 +184,7 @@ Friend MustInherit Class clsBase
             BasePreProcessing()
             If boom_Abort Then Abort()
 
-            Go_Child()
+            Go_Child().GetAwaiter().GetResult()
 
             BasePostProcessing()
 

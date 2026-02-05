@@ -2,6 +2,9 @@ Module Program
     Private objm_Process As clsBase
 
     Sub Main(args As String())
+#If DEBUG Then
+        objm_Process = New clsUnanalyzedChessGames
+#Else
         'TODO: maybe consider using modCommandLine.ParseCommandLineArguments in the future
         If args.Length = 0 Then
             Console.WriteLine("No arguments passed, application terminating")
@@ -15,9 +18,12 @@ Module Program
         Select Case strl_Process
             Case "CHESSGAMEANALYSIS"
                 objm_Process = New clsChessGameAnalysis
+            Case "UNANALYZEDCHESSGAMES"
+                objm_Process = New clsUnanalyzedChessGames
             Case Else
                 Throw New Exception($"Invalid process name '{strl_Process}' or process not currently supported")
         End Select
+#End If
 
         objm_Process.Go()
     End Sub
