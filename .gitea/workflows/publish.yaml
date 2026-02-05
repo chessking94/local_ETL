@@ -23,6 +23,11 @@ jobs:
           files: '**/appsettings.json'
         env:
           FILEPROCESSING_ROOT: ${{ vars.FILEPROCESSING_ROOT }}
+          RABBITMQ_HOST: ${{ vars.RABBITMQ_HOST }}
+          RABBITMQ_USER: ${{ vars.RABBITMQ_USER }}
+          RABBITMQ_PASS: ${{ secrets.RABBITMQ_PASS }}
+          RABBITMQ_EXCHANGE_UNANALYZED: ${{ vars.RABBITMQ_EXCHANGE_UNANALYZED }}
+          RABBITMQ_ROUTE_UNANALYZED: ${{ vars.RABBITMQ_ROUTE_UNANALYZED }}
 
       - name: Install dotnet
         uses: actions/setup-dotnet@v4
