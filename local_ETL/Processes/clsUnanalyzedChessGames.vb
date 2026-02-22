@@ -122,7 +122,7 @@ Friend Class clsUnanalyzedChessGames : Inherits clsBase
 
         objm_CMD.Parameters.Clear()
         objm_CMD.CommandType = CommandType.Text
-        objm_CMD.CommandText = "SELECT GameID FROM ChessWarehouse.lake.Games WHERE FileID = @FileID"
+        objm_CMD.CommandText = "SELECT GameID FROM ChessWarehouse.lake.Games WHERE FileID = @FileID AND AnalysisStatusID = 1"
         objm_CMD.Parameters.AddWithValue("@FileID", intv_FileID)
         With objm_CMD.ExecuteReader
             While .Read()
